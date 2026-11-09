@@ -1,0 +1,1 @@
+elixir --sname nodoservidor@localhost --cookie my_cookie nodo-servidor.exs
