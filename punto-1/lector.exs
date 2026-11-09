@@ -29,7 +29,6 @@ defmodule Sismos.Lector do
     %{registros: validos, rechazados: length(resultados) - length(validos)}
   end
 
-  # Una linea que haga fallar el parser se cuenta como rechazada.
   defp parsear(parser, linea) do
     parser.(linea)
   rescue

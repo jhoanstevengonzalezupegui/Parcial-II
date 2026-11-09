@@ -30,7 +30,7 @@ defmodule Sismos.Movimiento do
     end
   end
 
-  # Acepta solo HH:MM:SS con dos digitos por parte y valores dentro del dia.
+  # Acepta solo con dos digitos por parte y valores dentro del dia.
   defp parsear_hora(texto) do
     case String.split(texto, ":") do
       [h, m, s] ->

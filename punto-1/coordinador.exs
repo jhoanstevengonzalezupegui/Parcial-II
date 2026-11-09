@@ -9,7 +9,7 @@ defmodule Sismos.Coordinador do
   Lanza un Task por archivo y espera ambos resultados. Cada Task responde con
   el nombre del archivo, asi el orden de llegada no importa.
 
-  Devuelve {:ok, %{ciudades: ..., movimientos: ...}} o {:error, [{archivo, motivo}]}.
+  Devuelve {:ok,.... } o {:error, [{archivo, motivo}]}.
   """
   def obtener_datos(directorio) do
     ruta_ciudades = Path.join(directorio, "ciudades.txt")
