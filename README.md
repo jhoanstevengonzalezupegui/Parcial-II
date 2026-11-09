@@ -1,6 +1,6 @@
 # Parcial 2 - Programación 3 (Elixir)
 
-Observatorio Sismológico de la Universidad del Quindío. El proyecto tiene dos partes: un reporte local de sismos por ciudad (punto 1) y una consulta de esos reportes entre dos nodos de Elixir (punto 2, a cargo del compañero).
+Observatorio Sismológico de la Universidad del Quindío. El proyecto tiene dos partes: un reporte local de sismos por ciudad (punto 1) y una consulta de esos reportes entre dos nodos de Elixir (punto 2).
 
 ## Requisitos
 
@@ -21,8 +21,12 @@ parcial-2-elixir/
 │       └── movimientos.txt
 └── punto-2/
     ├── nodo-cliente/
+    │   └── nodo-Cliente.exs
     └── nodo-servidor/
+        ├── nodo-Servidor.exs
         └── resources/
+            ├── ciudades.txt
+            └── movimientos.txt
 ```
 
 ## Cómo funciona
@@ -48,4 +52,44 @@ elixir main.exs
 
 ## Punto 2 - Consulta entre nodos
 
-Pendiente. Las carpetas `punto-2/nodo-cliente` y `punto-2/nodo-servidor` están listas para agregar el código, los datos y las instrucciones de ejecución.
+Se necesitan dos terminales. Primero se inicia el servidor y después el cliente. Los dos nodos usan la misma cookie, `my_cookie`, que se configura con la opción `--cookie`. Los comandos se ejecutan desde la raíz del repositorio.
+
+Nombres de los nodos: `nodoservidor@localhost` y `nodocliente@localhost`.
+
+Terminal 1 - nodo servidor:
+
+```
+cd punto-2\nodo-servidor
+elixir --sname nodoservidor@localhost --cookie my_cookie nodo-Servidor.exs
+```
+
+Debe aparecer el mensaje `NODO SERVIDOR`. La terminal queda abierta, esperando solicitudes.
+
+Terminal 2 - nodo cliente (después de iniciar el servidor):
+
+```
+cd punto-2\nodo-cliente
+elixir --sname nodocliente@localhost --cookie my_cookie nodo-Cliente.exs
+```
+
+El cliente se conecta al servidor, envía sus consultas y muestra las respuestas en consola hasta recibir `:fin`.
+
+## Verificación del punto 2
+
+Identificadores usados para probar (con los datos de ejemplo):
+
+| Consulta | Identificador | Resultado esperado |
+|---|---|---|
+| Ciudad con movimientos | `C01` (Armenia) | Detalle de sus movimientos, total 2, mayor S001 con 3.4, promedio 14.00 km |
+| Ciudad sin movimientos | `C03` (Circasia) | Sin movimientos registrados, total 0, No aplica |
+| Ciudad inexistente | `C99` | La ciudad no está registrada |
+| Reporte general | - | Todas las ciudades y registros rechazados por archivo |
+
+Para comprobar que el servidor sigue atendiendo solicitudes, se deja abierta la Terminal 1 y se ejecuta el cliente por segunda vez en la Terminal 2, con el mismo comando:
+
+```
+cd punto-2\nodo-cliente
+elixir --sname nodocliente@localhost --cookie my_cookie nodo-Cliente.exs
+```
+
+Debe mostrar de nuevo las respuestas en el mismo orden y terminar al recibir `:fin`.
